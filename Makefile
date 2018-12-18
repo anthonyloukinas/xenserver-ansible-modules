@@ -1,8 +1,8 @@
 ANSIBLE_GROUP = ansible
 init:
 	mkdir -p ./build/usr/share/ansible/modules
-	cp -r ./xenserver/module_utils ./build/usr/share/ansible/
-	cp -r ./xenserver ./build/usr/share/ansible/modules/
+	cp -r ./ansible-modules/module_utils ./build/usr/share/ansible/
+	cp -r ./ansible-modules ./build/usr/share/ansible/modules/xenserver
 install:
 	cp -r ./build/usr /
 uninstall:

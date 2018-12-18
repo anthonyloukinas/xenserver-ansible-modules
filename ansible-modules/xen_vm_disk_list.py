@@ -63,7 +63,11 @@ from ansible.module_utils.basic import (
     load_platform_subclass,
 )
 from ansible.module_utils._text import to_native
-from ansible.module_utils.xenserver_common import XeBase
+try:
+    from ansible.module_utils.xenserver_common import XeBase
+    PYTHON_SDK_IMPORTED = True
+except ImportError as e:
+    PYTHON_SDK_IMPORTED = False
 
 class XeVmDiskList(XeBase):
     """
@@ -93,16 +97,23 @@ class XeVmDiskList(XeBase):
         return to_native(out).strip()
 
 def main():
-    module = AnsibleModule(
-        argument_spec=dict(
+
+    module_specific_arguments = dict(
             vm          = dict(required=False, type='str'),
             vbdparams   = dict(required=False, type='str'),
             vdiparams   = dict(required=False, type='str'),
             multiple    = dict(required=False, type='bool'),
             powerstate  = dict(required=False, type='str')
-        ),
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_specific_arguments,
         supports_check_mode=True,
     )
+
+    # Fail the module if imports failed
+    if not PYTHON_SDK_IMPORTED:
+        module.fail_json(msg='Could not load xenserver_common utils')
 
     vm_disk_list_cmd = XeVmDiskList(module)
     vm_disk_list_vm = module.params['vm']
