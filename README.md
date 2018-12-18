@@ -1,22 +1,25 @@
-# Ansible Xenserver Module
-A custom ansible module for working with Xenserver. It is a wrapper around the xe command. This is a fork of an old project hoping to spring some life into it. I've run into the need for more native Ansible integration and would like to open this project up to anyone with spare time and interest in automating XenServer.
+# Citrix Xenserver Ansible Modules
+This repository provides [Ansible](http://ansible.com) modules for configuring, provisioning, and managing your Xenserver workload. It uses Ansible command wrappers to the host remote system. This module has been tested against **XenServer 7.6+**.
 
-## Setup
-- Requires ansible 2.4+
+The code here should be considered alpha quality and may be broken at times due to experiments and refactoring. Tagged releases should be stable. 
+
+## Documentation
+Documentation is hosted at (coming soon)
+
+Currently the following modules are implemented
+
+- xen_vm_list - List Virtual Machines
+- xen_vm_install - Provision a Virtual Machine
+- xen_vm_start - Start a Virtual Machine
+- xen_vm_shutdown - Shutdown a Virtual Machine
+- xen_vm_disk_list - List disks associated with Virtual Machines
+
+## Pre-requisites
+- Ansible 2.4+
+- Python 2.7 or 3.x
 - Requires build tools (make)
 
-#### Ubuntu/Debian
-```
-sudo apt install build-essential
-```
-
-#### CentOS/Fedora/RedHat Enterprise
-```
-sudo yum group install "Development Tools"
-```
-
-## Install
-Next build the module.
+## Build & Install
 ```
 make
 make install
@@ -27,7 +30,8 @@ Edit /etc/ansible/ansible.cfg and add the following lines:
 library = /usr/share/ansible/modules
 module_utils = /usr/share/ansible/module_utils
 ```
-## Uninstall
+
+### Uninstall
 ```
 make uninstall
 ```
@@ -59,10 +63,13 @@ make uninstall
       register: vm_ip
 ...
 ```
-## Develop
 
-Follow the Ansible Development Documentation and Style Guides.  
+## LICENSE
+**GPL V3**
+See [LICENSE](./LICENSE) 
+
+## COPYRIGHT
+**COPYRIGHT 2018 ContainerNerds**
 
 ## Contribute:
-
-Please fork, make changes on a feature branch and open up a pull request.
+Pull requests and issues are welcome. Compatability testing for XenServer is needed.
